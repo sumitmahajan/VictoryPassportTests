@@ -16,14 +16,13 @@ class Browser(object):
     def launch_driver(self):
         self.driver = webdriver.Remote(
             command_executor='http://sumitmahajan1:Cgvydx3ZyqJBboxGTqWy@hub.browserstack.com:80/wd/hub',
-            desired_capabilities=DesiredCapabilities.EDGE)
+            desired_capabilities=DesiredCapabilities.FIREFOX)
         self.driver.implicitly_wait(10)
 
     def visit(self, location=''):
         Browser.launch_driver(self)
         url = self.base_url + location
         self.driver.get(url)
-        self.driver.maximize_window()
 
     def click_by_id(self, selector):
         self.driver.implicitly_wait(10)
