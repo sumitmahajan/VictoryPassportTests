@@ -1,16 +1,20 @@
 from behave import Given,When,Then
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
-from features.helpers.browser import Browser as browser
+from features.helpers.config import Config as cf
 
 
 class VpSteps:
     @When("I have vp site open")
     def step(context):
-        browser.visit(context.browser)
+        base_url = cf.base_url
+        context.browser.get(base_url)
+
 
     @Then("I can see footer Paid for by Stripe AAN")
     def step(context):
-        browser.assert_by_class(context.browser,"paid-for-by-container","Paid for by Stripe AAN")
+        context.browser.implicitly_wait(5)
+        elem = context.browser.find_element_by_class_name("paid-for-by-container").text
+        assert "Paid for by Stripe AAN" == elem.strip()
 
 
