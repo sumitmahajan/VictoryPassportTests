@@ -3,15 +3,24 @@ from time import sleep
 from selenium.webdriver.common.keys import Keys
 from features.helpers.config import Config as cf
 import os,json
+from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
+import logging
+log = logging.getLogger(__name__)
 
 
 class Browser(object):
 
     base_url = cf.base_url
-    driver = webdriver.Chrome(cf.chromeDriverLocation)
-    driver.implicitly_wait(10)
+    driver = webdriver
+
+    def launch_driver(self):
+        self.driver = webdriver.Remote(
+            command_executor='http://127.0.0.1:4448/wd/hub',
+            desired_capabilities=DesiredCapabilities.EDGE)
+        self.driver.implicitly_wait(10)
 
     def visit(self, location=''):
+        Browser.launch_driver(self)
         url = self.base_url + location
         self.driver.get(url)
         self.driver.maximize_window()
@@ -40,13 +49,13 @@ class Browser(object):
         self.driver.implicitly_wait(10)
         sleep(2)
         elem = self.driver.find_element_by_css_selector(selector).text
-        #pdb.set_trace()
         assert expected_text == elem
 
     def assert_by_class(self,selector,expected_text):
         self.driver.implicitly_wait(10)
         elem = self.driver.find_element_by_class_name(selector).text
-        assert expected_text == elem
+        log.info(elem + ":" + expected_text)
+        assert expected_text == elem.strip()
 
     def type_in_text_id(self,selector,text):
         self.driver.implicitly_wait(10)
@@ -81,3 +90,4 @@ class Browser(object):
     def close(self):
         self.driver.stop_client()
         self.driver.close()
+        self.driver.quit()
