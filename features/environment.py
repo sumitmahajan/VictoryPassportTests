@@ -2,6 +2,7 @@ from selenium import webdriver
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 import os
 import json
+import pavement
 
 CONFIG_FILE = os.environ['CONFIG_FILE'] if 'CONFIG_FILE' in os.environ else 'config/parallel.json'
 TASK_ID = int(os.environ['TASK_ID']) if 'TASK_ID' in os.environ else 0
@@ -10,8 +11,9 @@ with open(CONFIG_FILE) as data_file:
     CONFIG = json.load(data_file)
 
 
-def before_feature(context, feature):
-    desired_capabilities = CONFIG['environments'][2]
+def before_feature(context, taskid):
+    taskid = int(TASK_ID)
+    desired_capabilities = CONFIG['environments'][taskid]
 
     for key in CONFIG["capabilities"]:
         if key not in desired_capabilities:
