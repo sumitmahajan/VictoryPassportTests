@@ -23,8 +23,7 @@ def run_behave_test():
 @consume_nargs(0)
 def run():
     """Run single, local and parallel test using different config."""
-    jobs = []
-    for i in range(4):
+    for i in range(2):
         os.environ['TASK_ID'] = str(i)
         run_behave_test()
 
