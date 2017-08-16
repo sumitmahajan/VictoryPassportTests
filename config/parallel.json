@@ -3,7 +3,7 @@
   "key": "Cgvydx3ZyqJBboxGTqWy",
 
   "capabilities": {
-    "build": "VictoryPassport",
+    "build": "VictoryPassportTests",
     "name": "VPTests",
     "browserstack.debug": true
   },
