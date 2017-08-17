@@ -21,7 +21,8 @@ def before_feature(context, taskid):
 
     context.browser = webdriver.Remote(
         command_executor='http://127.0.0.1:4448/wd/hub',
-        #command_executor='http://sumitmahajan1:Cgvydx3ZyqJBboxGTqWy@hub.browserstack.com:80/wd/hub',
+        #desired_capabilities=DesiredCapabilities.EDGE)
+        # command_executor='http://sumitmahajan1:Cgvydx3ZyqJBboxGTqWy@hub.browserstack.com:80/wd/hub',
         desired_capabilities=desired_capabilities)
 
 

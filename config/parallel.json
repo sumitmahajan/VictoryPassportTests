@@ -8,16 +8,23 @@
     "browserstack.debug": true
   },
 
-  "environments": [{
-    "browser": "chrome"
-  },{
+  "environments": [
+    {
     "os": "Windows",
-    "os_version": "7",
-    "browser": "IE",
-    "browser_version": "8.0",
+    "os_version": "10",
+    "browser": "Edge",
+    "browser_version": "15.0",
     "resolution": "1024x768"
   },{
     "browser": "firefox"
+  },{
+    "os": "Windows",
+    "os_version": "10",
+    "browser": "IE",
+    "browser_version": "11.0",
+    "resolution": "1024x768"
+  },{
+    "browser": "chrome"
   },{
     "browser": "safari"
   },{

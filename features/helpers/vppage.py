@@ -49,7 +49,8 @@ def select_dropdown(context,selector,selection):
     context.browser.implicitly_wait(5)
     elem=context.browser.find_element_by_css_selector('div.five.wide.field')
     elem.click()
-    type_by_xpath(context, '//*[@id="cc-billing-information"]/div[3]/div[2]/div/input', "Alabama")
+    #type_by_xpath(context, '//*[@id="cc-billing-information"]/div[3]/div[2]/div/input', "Alabama")
+    click_by_css(context, "div.item")
 
 
 def switch_to_inner_frame(context,selector):
