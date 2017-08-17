@@ -1,46 +1,51 @@
 from behave import Given,When,Then
-from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
-from features.helpers.config import Config as cf
+import features.helpers.vppage as vp
 import logging
 from time import sleep
 log = logging.getLogger(__name__)
-
 
 class VpSteps:
 
     @When("I have vp site open")
     def step(context):
-        base_url = cf.base_url
-        context.browser.get(base_url)
+        vp.visit_url(context)
 
     @Then("I can see footer Paid for by Stripe AAN")
     def step(context):
-        context.browser.implicitly_wait(5)
-        elem = context.browser.find_element_by_class_name("paid-for-by-container").text
-        assert "Paid for by Stripe AAN" == elem.strip()
+        vp.assert_by_class(context,"paid-for-by-container","Paid for by Stripe AAN")
 
     @When("I fill all fields on vp page")
     def step(context):
-        context.browser.implicitly_wait(5)
-        context.browser.switch_to.frame(context.browser.find_element_by_tag_name("iframe"))
-        elem = context.browser.find_element_by_xpath("//span[text()='$4']")
-        elem.click()
-        sleep(1)
-        elem = context.browser.find_element_by_css_selector('#first-name')
-        elem.send_keys("Sumit")
-        sleep(1)
-        elem = context.browser.find_element_by_css_selector('#last-name')
-        elem.send_keys("Mahajan")
-        sleep(1)
-        elem = context.browser.find_element_by_css_selector('#street-address')
-        elem.send_keys("33 Sheppard Ave E")
-        sleep(1)
-        elem = context.browser.find_element_by_css_selector('#apartment')
-        elem.send_keys("501")
-        sleep(5)
+        vp.switch_to_iframe(context,"iframe")
+        vp.click_by_xpath(context,"//span[text()='$4']")
+        vp.type_by_css(context, "#first-name", "Sumit")
+        vp.type_by_css(context, "#last-name", "Mahajan")
+        vp.type_by_css(context, "#street-address", "33 Sheppard Ave E")
+        vp.type_by_css(context, "#apartment", "501")
+        vp.type_by_css(context, "#city", "Toronto")
+        vp.type_by_css(context, "#zip-code", "12345")
+        vp.type_by_css(context, "#email-address", "sumit@stagwell.tech")
+        vp.type_by_css(context, "#phone", "647-973-8258")
+        vp.type_by_css(context, "#employer", "Stagwell")
+        vp.select_dropdown(context,"","")
+        vp.type_by_css(context, "#occupation", "Analyst")
+        vp.switch_to_inner_frame(context, "")
+        vp.click_by_xpath(context, '//*[@id="root"]/form/div/div[2]/span[1]/span[2]/label')
+        vp.type_by_xpath(context, '//*[@id="root"]/form/div/div[2]/span[1]/span[2]/label/input',
+                         "42424242424242420121123")
+        vp.switch_to_default(context)
+        vp.switch_to_iframe(context, "iframe")
+        vp.click_by_css(context, "#contribute-button")
         #context.browser.switch_to.default_content()
 
     @Given("I have vp site open")
     def step(context):
         log.info(context.browser.title)
+
+    @When("I click on contribute button")
+    def step(context):
+        log.info("Me")
+
+    @Then("I can make contribution")
+    def step(context):
+        log.info("You")
