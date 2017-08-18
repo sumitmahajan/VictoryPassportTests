@@ -8,15 +8,8 @@
     "browserstack.debug": true
   },
 
-  "environments": [
-    {
-    "os": "Windows",
-    "os_version": "10",
-    "browser": "Edge",
-    "browser_version": "15.0",
-    "resolution": "1024x768"
-  },{
-    "browser": "firefox"
+  "environments": [{
+    "browserName": "firefox"
   },{
     "os": "Windows",
     "os_version": "10",

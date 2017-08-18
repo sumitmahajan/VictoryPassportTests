@@ -29,13 +29,18 @@ class VpSteps:
         vp.type_by_css(context, "#employer", "Stagwell")
         vp.select_dropdown(context,"","")
         vp.type_by_css(context, "#occupation", "Analyst")
-        vp.switch_to_inner_frame(context, "")
-        vp.click_by_xpath(context, '//*[@id="root"]/form/div/div[2]/span[1]/span[2]/label')
-        vp.type_by_xpath(context, '//*[@id="root"]/form/div/div[2]/span[1]/span[2]/label/input',
-                         "42424242424242420121123")
+        if context.browser.capabilities["browserName"] == "MicrosoftEdge":
+            vp.switch_to_inner_frame(context, "")
+            sleep(4)
+            vp.click_by_css(context, '#card-element')
+            vp.type_by_css(context, 'iframe[title = "Secure payment input frame"]', "4242424242424242")
+        else:
+            vp.switch_to_inner_frame(context, "")
+            vp.click_by_xpath(context, '//*[@id="root"]/form/div/div[2]/span[1]/span[2]/label')
+            vp.type_by_xpath(context, '//*[@id="root"]/form/div/div[2]/span[1]/span[2]/label/input',
+                             "42424242424242420121123")
         vp.switch_to_default(context)
         vp.switch_to_iframe(context, "iframe")
-        vp.click_by_css(context, "#contribute-button")
         #context.browser.switch_to.default_content()
 
     @Given("I have vp site open")
@@ -44,7 +49,7 @@ class VpSteps:
 
     @When("I click on contribute button")
     def step(context):
-        log.info("Me")
+        vp.click_by_css_script(context, "#contribute-button")
 
     @Then("I can make contribution")
     def step(context):

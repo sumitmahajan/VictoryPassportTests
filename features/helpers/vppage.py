@@ -4,6 +4,8 @@ from time import sleep
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
+import logging
+log = logging.getLogger(__name__)
 
 def type_by_css(context,selector,text):
     context.browser.implicitly_wait(5)
@@ -49,16 +51,41 @@ def select_dropdown(context,selector,selection):
     context.browser.implicitly_wait(5)
     elem=context.browser.find_element_by_css_selector('div.five.wide.field')
     elem.click()
-    #type_by_xpath(context, '//*[@id="cc-billing-information"]/div[3]/div[2]/div/input', "Alabama")
-    click_by_css(context, "div.item")
+    if context.browser.capabilities['browserName'] == "MicrosoftEdge" or \
+                    context.browser.capabilities['browserName'] == "internet explorer":
+        select = Select(context.browser.find_element_by_css_selector('#state'))
+        select.select_by_visible_text("Alabama")
+    else:
+        #type_by_xpath(context, '//*[@id="cc-billing-information"]/div[3]/div[2]/div/input', "Alabama")
+        click_by_css(context, "div.item")
+        #click_by_css(context, ".menu")
+
 
 
 def switch_to_inner_frame(context,selector):
     context.browser.implicitly_wait(5)
-    frame = context.browser.find_element_by_xpath('//*[@id="card-element"]/div/iframe')
-    context.browser.switch_to.frame(frame)
+    if context.browser.capabilities['browserName'] != "MicrosoftEdge":
+        frame = context.browser.find_element_by_xpath('//*[@id="card-element"]/div/iframe')
+        context.browser.switch_to.frame(frame)
+    else:
+        sleep(5)
+        frame = context.browser.find_elements_by_tag_name('iframe')
+        log.info("Length is : "+str(len(frame)))
+        iframe = frame[0]
+        context.browser.switch_to.frame(iframe)
 
 
 def switch_to_default(context):
     context.browser.implicitly_wait(5)
     context.browser.switch_to.default_content()
+
+def type_by_name(context,selector,text):
+    context.browser.implicitly_wait(5)
+    elem = context.browser.find_element_by_css_selector(selector)
+    elem.send_keys(text)
+
+def click_by_css_script(context,selector):
+    elem = context.browser.find_element_by_css_selector(selector)
+    context.browser.execute_script("arguments[0].scrollIntoView(true);", elem)
+    sleep(2)
+    elem.click()
