@@ -17,13 +17,13 @@ setup(
 )
 
 def run_behave_test():
-    sh('behave features/features/vptests.feature')
+    sh(' behave -f allure_behave.formatter:AllureFormatter -o %allure_result_folder% ./features')
 
 @task
 @consume_nargs(0)
 def run():
     """Run single, local and parallel test using different config."""
-    for i in range(3):
+    for i in range(1):
         os.environ['TASK_ID'] = str(i)
         run_behave_test()
 

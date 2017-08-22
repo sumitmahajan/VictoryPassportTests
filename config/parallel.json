@@ -8,8 +8,9 @@
     "browserstack.debug": true
   },
 
-  "environments": [{
-    "browserName": "firefox"
+  "environments": [
+    {
+    "browserName": "chrome"
   },{
     "os": "Windows",
     "os_version": "10",

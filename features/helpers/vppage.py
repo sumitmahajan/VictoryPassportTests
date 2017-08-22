@@ -85,7 +85,19 @@ def type_by_name(context,selector,text):
     elem.send_keys(text)
 
 def click_by_css_script(context,selector):
+    context.browser.implicitly_wait(5)
     elem = context.browser.find_element_by_css_selector(selector)
     context.browser.execute_script("arguments[0].scrollIntoView(true);", elem)
     sleep(2)
     elem.click()
+
+def assert_by_css(context,css,expectedtext):
+    context.browser.implicitly_wait(5)
+    elem = context.browser.find_element_by_css_selector(css).text
+    assert expectedtext == elem.strip()
+
+def click_by_css_jscript(context,selector):
+    context.browser.implicitly_wait(5)
+    elem = context.browser.find_element_by_css_selector(selector)
+    context.browser.execute_script("arguments[0].click();", elem)
+    sleep(2)

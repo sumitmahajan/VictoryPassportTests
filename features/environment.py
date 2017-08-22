@@ -14,15 +14,15 @@ with open(CONFIG_FILE) as data_file:
 def before_feature(context, taskid):
     taskid = int(TASK_ID)
     desired_capabilities = CONFIG['environments'][taskid]
-
-    for key in CONFIG["capabilities"]:
-        if key not in desired_capabilities:
-            desired_capabilities[key] = CONFIG["capabilities"][key]
+    #
+    # for key in CONFIG["capabilities"]:
+    #     if key not in desired_capabilities:
+    #         desired_capabilities[key] = CONFIG["capabilities"][key]
 
     context.browser = webdriver.Remote(
-        #command_executor='http://127.0.0.1:4444/wd/hub',
+        command_executor='http://127.0.0.1:4444/wd/hub',
         #desired_capabilities=DesiredCapabilities.INTERNETEXPLORER)
-        command_executor='http://sumitmahajan1:Cgvydx3ZyqJBboxGTqWy@hub.browserstack.com:80/wd/hub',
+        #command_executor='http://sumitmahajan1:Cgvydx3ZyqJBboxGTqWy@hub.browserstack.com:80/wd/hub',
         desired_capabilities=desired_capabilities)
 
 

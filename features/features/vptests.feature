@@ -9,3 +9,9 @@ Feature: Victory Passport Donation Page
     When I fill all fields on vp page
     And I click on contribute button
     Then I can make contribution
+
+  Scenario: I should not be able to enter invalid data in lastname
+    Given I have vp site open
+    And I fill all fields on vp page
+    When I change the last name to @@@@@@
+    Then I should not be able to make contribution

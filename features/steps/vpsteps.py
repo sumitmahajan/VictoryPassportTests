@@ -14,6 +14,7 @@ class VpSteps:
     def step(context):
         vp.assert_by_class(context,"paid-for-by-container","Paid for by Stripe AAN")
 
+    @Given("I fill all fields on vp page")
     @When("I fill all fields on vp page")
     def step(context):
         vp.switch_to_iframe(context,"iframe")
@@ -45,7 +46,7 @@ class VpSteps:
 
     @Given("I have vp site open")
     def step(context):
-        log.info(context.browser.title)
+        vp.visit_url(context)
 
     @When("I click on contribute button")
     def step(context):
@@ -53,4 +54,16 @@ class VpSteps:
 
     @Then("I can make contribution")
     def step(context):
-        log.info("You")
+        sleep(10)
+        vp.assert_by_css(context, ".deny", "No Thanks")
+        vp.click_by_xpath(context,'//*[@id="upsell-double-donation-form"]/div[2]/div/div/div')
+
+    @When('I change the last name to @@@@@@')
+    def step(context):
+        vp.type_by_css(context, "#last-name", "@@@@@")
+
+    @Then('I should not be able to make contribution')
+    def step(context):
+        vp.click_by_css_script(context, "#contribute-button")
+        sleep(10)
+
