@@ -17,7 +17,8 @@ setup(
 )
 
 def run_behave_test():
-    sh(' behave -f allure_behave.formatter:AllureFormatter -o %allure_result_folder% ./features')
+    sh(' behave -f allure_behave.formatter:AllureFormatter -o %allure_result_folder% ./features/features/admintests.feature')
+
 
 @task
 @consume_nargs(0)

@@ -10,7 +10,7 @@
 
   "environments": [
     {
-    "browserName": "chrome"
+    "browserName": "internet explorer"
   },{
     "os": "Windows",
     "os_version": "10",

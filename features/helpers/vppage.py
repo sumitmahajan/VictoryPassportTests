@@ -1,9 +1,11 @@
 from features.helpers.config import Config as cf
 from selenium.webdriver.support.ui import Select
 from time import sleep
+from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.common.action_chains import ActionChains
 import logging
 log = logging.getLogger(__name__)
 
@@ -27,6 +29,13 @@ def switch_to_iframe(context,iframetag):
 def click_by_xpath(context,xpath):
     context.browser.implicitly_wait(5)
     elem = context.browser.find_element_by_xpath(xpath)
+    sleep(3)
+    elem.click()
+
+
+def click_by_id(context, id):
+    context.browser.implicitly_wait(5)
+    elem = context.browser.find_element_by_id(id)
     elem.click()
 
 
@@ -47,6 +56,11 @@ def visit_url(context):
     context.browser.get(base_url)
 
 
+def visit_admin_url(context):
+    admin_url = cf.admin_url
+    context.browser.get(admin_url)
+
+
 def select_dropdown(context,selector,selection):
     context.browser.implicitly_wait(5)
     elem=context.browser.find_element_by_css_selector('div.five.wide.field')
@@ -59,7 +73,6 @@ def select_dropdown(context,selector,selection):
         #type_by_xpath(context, '//*[@id="cc-billing-information"]/div[3]/div[2]/div/input', "Alabama")
         click_by_css(context, "div.item")
         #click_by_css(context, ".menu")
-
 
 
 def switch_to_inner_frame(context,selector):
@@ -79,10 +92,12 @@ def switch_to_default(context):
     context.browser.implicitly_wait(5)
     context.browser.switch_to.default_content()
 
+
 def type_by_name(context,selector,text):
     context.browser.implicitly_wait(5)
     elem = context.browser.find_element_by_css_selector(selector)
     elem.send_keys(text)
+
 
 def click_by_css_script(context,selector):
     context.browser.implicitly_wait(5)
@@ -91,13 +106,34 @@ def click_by_css_script(context,selector):
     sleep(2)
     elem.click()
 
+
 def assert_by_css(context,css,expectedtext):
     context.browser.implicitly_wait(5)
     elem = context.browser.find_element_by_css_selector(css).text
     assert expectedtext == elem.strip()
+
+
+def assert_by_xpath(context,xpath,expectedtext):
+    context.browser.implicitly_wait(5)
+    elem = context.browser.find_element_by_xpath(xpath).text
+    assert expectedtext == elem.strip()
+
 
 def click_by_css_jscript(context,selector):
     context.browser.implicitly_wait(5)
     elem = context.browser.find_element_by_css_selector(selector)
     context.browser.execute_script("arguments[0].click();", elem)
     sleep(2)
+
+
+def select_dropdownoption(context,xpath,index):
+    context.browser.implicitly_wait(5)
+    #elem = context.browser.find_element_by_css_selector(selector)
+    #select = Select(elem)
+    #select.select_by_index(2)
+    #context.browser.find_element_by_css_selector("select#donation_page_business_unit_id > option[value='7']").click()
+    click_by_xpath(context, xpath)
+
+def select_dropdownclickoption(context,clickxpath,selectxpath,index):
+    click_by_xpath(context, clickxpath)
+    select_dropdownoption(context, selectxpath, index)
